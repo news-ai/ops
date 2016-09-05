@@ -30,7 +30,7 @@ index.number_of_replicas: 0
 network.bind_host: localhost
 
 http.cors.enabled : true
-http.cors.allow-origin : "https://publisher.newsai.org,http://localhost:3000"
+http.cors.allow-origin : "https://site.newsai.org,http://localhost:3000,http://localhost:8080,http://localhost:8000"
 http.cors.allow-methods : OPTIONS, HEAD, GET, POST, PUT, DELETE
 http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type, Content-Length
 #
