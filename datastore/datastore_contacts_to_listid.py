@@ -21,14 +21,18 @@ def sync_list_contacts():
                 key = client.key('Contact', int(contact_id))
                 contact = client.get(key)
 
-                post_data = {}
-                post_data['listid'] = int(media_list.key.id)
+                if 'ListId' not in contact:
+                    print contact
+                    post_data = {}
+                    post_data['listid'] = int(media_list.key.id)
 
-                # Post data
-                json_data = json.dumps(post_data)
-                r = requests.patch(
-                    'https://tabulae.newsai.org/api/contacts/' + str(contact_id), data=json_data, verify=False, auth=('jebqsdFMddjuwZpgFrRo', ''))
-                if r.status_code != requests.codes.ok:
-                    print r.text
+                    # Post data
+                    json_data = json.dumps(post_data)
+                    r = requests.patch(
+                        'https://tabulae.newsai.org/api/contacts/' + str(contact_id), data=json_data, verify=False, auth=('jebqsdFMddjuwZpgFrRo', ''))
+                    if r.status_code != requests.codes.ok:
+                        print r.text
+                else:
+                    print contact['ListId']
 
 sync_list_contacts()
