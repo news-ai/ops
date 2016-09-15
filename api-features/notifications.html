@@ -1,25 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
     <link rel="stylesheet" href="">
 </head>
+
 <body>
-    
+
 </body>
 <script type="text/javascript" src="https://tabulae.newsai.org/_ah/channel/jsapi"></script>
 <script type="text/javascript" charset="utf-8" async defer>
+    // Simple log function
+    function notification(argument) {
+        var notifications = JSON.parse(argument.data);
+        for (var i = notifications.length - 1; i >= 0; i--) {
+            console.log(notifications[i].message);
+        }
+    }
+
     function log(argument) {
         console.log(argument);
     }
-    var token = "";
-    channel = new goog.appengine.Channel(token);
-    socket = channel.open();
-    socket.onopen = log;
-    socket.onmessage = log;
-    socket.onerror = log;
-    socket.onclose = log;
+
+    // Get data from the token endpoint
+    fetch('https://tabulae.newsai.org/api/users/me/token', {
+            credentials: 'include'
+        })
+        .then(function(response) {
+            return response.text();
+        })
+        .then(function(response) {
+            var jsonText = JSON.parse(response);
+
+            // Connect to the channel
+            console.log(jsonText.token);
+            channel = new goog.appengine.Channel(jsonText.token);
+            socket = channel.open();
+            socket.onopen = log;
+            socket.onmessage = notification;
+            socket.onerror = log;
+            socket.onclose = log;
+
+        });
 </script>
+
 </html>
