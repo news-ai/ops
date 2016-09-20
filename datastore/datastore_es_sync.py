@@ -46,6 +46,7 @@ def sync_es(index_name, kind, result_type):
         doc = {
             '_type': result_type,
             '_index': index_name,
+            '_id': result_id,
             'data': result
         }
         to_append.append(doc)
@@ -80,6 +81,7 @@ def contact_struct_to_es(contact, media_list):
     doc = {
         '_type': 'contact',
         '_index': 'contacts',
+        '_id': contact_id,
         'data': contact
     }
     return doc
@@ -179,5 +181,5 @@ def reset_elastic(kind):
 
 # Agencies
 # reset_elastic('contacts')
-# sync_list_contacts()
+sync_list_contacts()
 # sync_lists_contacts_hourly()
