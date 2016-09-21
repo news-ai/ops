@@ -183,3 +183,6 @@ def reset_elastic(kind):
 # reset_elastic('contacts')
 # sync_list_contacts()
 # sync_lists_contacts_hourly()
+
+# Headlines
+# reset_elastic('headlines')
