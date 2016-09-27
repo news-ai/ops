@@ -31,7 +31,22 @@ for result in results['hits']['hits']:
     count[result['_source']['data']['TweetId']] += 1
     results_per_id[result['_source']['data']['TweetId']].append(result)
 
+to_append = []
 for x in count:
     if count[x] > 1:
+        single_result = results_per_id[x][0]
+        print single_result
+        doc = {
+            '_type': 'tweets',
+            '_index': 'tweet',
+            '_id': single_result['_source']['data']['TweetId'],
+            'data': single_result['_source']['data']
+        }
+        to_append.append(doc)
         for each_result in results_per_id[x]:
-            print each_result['_id']
+            res = es.delete(
+                index='tweets', doc_type='tweet', id=each_result['_id'])
+            print res
+
+print to_append
+res = helpers.bulk(es, to_append)
