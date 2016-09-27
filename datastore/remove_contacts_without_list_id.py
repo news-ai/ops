@@ -9,4 +9,5 @@ query.add_filter('IsMasterContact', '=', False)
 contacts = list(query.fetch())
 
 for contact in contacts:
-    print contact
+    print contact.key
+    client.delete(contact.key)
