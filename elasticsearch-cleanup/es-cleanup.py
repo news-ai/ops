@@ -23,13 +23,19 @@ results = es.search(index='tweets', doc_type='tweet', size=1000)
 
 count = {}
 results_per_id = {}
+no_duplicates = {}
 
 for result in results['hits']['hits']:
     if result['_source']['data']['TweetId'] not in count:
         count[result['_source']['data']['TweetId']] = 0
+        no_duplicates[result['_source']['data']['Username']] = 0
         results_per_id[result['_source']['data']['TweetId']] = []
     count[result['_source']['data']['TweetId']] += 1
+    no_duplicates[result['_source']['data']['Username']] += 1
     results_per_id[result['_source']['data']['TweetId']].append(result)
+
+for x in no_duplicates:
+    print x
 
 to_append = []
 for x in count:
@@ -44,9 +50,9 @@ for x in count:
         }
         to_append.append(doc)
         for each_result in results_per_id[x]:
-            res = es.delete(
-                index='tweets', doc_type='tweet', id=each_result['_id'])
-            print res
+            print each_result
+            # res = es.delete(
+                # index='tweets', doc_type='tweet', id=each_result['_id'])
 
-print to_append
-res = helpers.bulk(es, to_append)
+# print to_append
+# res = helpers.bulk(es, to_append)
