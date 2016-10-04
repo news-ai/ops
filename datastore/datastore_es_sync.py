@@ -97,16 +97,19 @@ def sync_list_contacts():
             for contact_id in media_list['Contacts']:
                 key = client.key('Contact', int(contact_id))
                 contact = client.get(key)
-                doc = contact_struct_to_es(contact, media_list)
-                to_append.append(doc)
+                if contact:
+                    doc = contact_struct_to_es(contact, media_list)
+                    to_append.append(doc)
 
-                if limit == 100:
-                    res = helpers.bulk(es, to_append)
-                    print res
-                    to_append = []
-                    limit = 0
+                    if limit == 100:
+                        res = helpers.bulk(es, to_append)
+                        print res
+                        to_append = []
+                        limit = 0
 
-                limit = limit + 1
+                    limit = limit + 1
+                else:
+                    print contact
 
             # If any left at the end
             if len(to_append) > 0:
