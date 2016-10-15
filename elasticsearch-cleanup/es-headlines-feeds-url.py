@@ -19,7 +19,7 @@ es = Elasticsearch(
     ca_certs=certifi.where(),
 )
 
-results = es.search(index='headlines', doc_type='headline', size=5000)
+results = es.search(index='feeds', doc_type='feed', size=5000)
 
 to_append = []
 
@@ -29,12 +29,15 @@ for result in results['hits']['hits']:
     if '@' in headlines_data['data']['FeedURL']:
         headlines_data['data']['FeedURL'] = headlines_data['data']['FeedURL'].replace("@", "#40")
         doc = {
-            '_type': 'headlines',
-            '_index': 'headline',
+            '_type': 'feeds',
+            '_index': 'feed',
             '_id': headlines_id,
             'data': headlines_data['data']
         }
         to_append.append(doc)
+
+
+print to_append
 
 res = helpers.bulk(es, to_append)
 
