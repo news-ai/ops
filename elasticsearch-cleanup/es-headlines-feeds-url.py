@@ -21,5 +21,21 @@ es = Elasticsearch(
 
 results = es.search(index='headlines', doc_type='headline', size=5000)
 
+to_append = []
+
 for result in results['hits']['hits']:
-    print result
+    headlines_id = result['_id']
+    headlines_data = result['_source']
+    if '@' in headlines_data['data']['FeedURL']:
+        headlines_data['data']['FeedURL'] = headlines_data['data']['FeedURL'].replace("@", "#40")
+        doc = {
+            '_type': 'headlines',
+            '_index': 'headline',
+            '_id': headlines_id,
+            'data': headlines_data['data']
+        }
+        to_append.append(doc)
+
+res = helpers.bulk(es, to_append)
+
+print res
