@@ -233,8 +233,8 @@ def sync_es_lists(index_name, kind, result_type):
 
 # sync_es('lists', 'MediaList', 'list')
 
-reset_elastic('lists')
-sync_es_lists('lists', 'MediaList', 'list')
+# reset_elastic('lists')
+# sync_es_lists('lists', 'MediaList', 'list')
 
 # Agencies
 # reset_elastic('agencies')
