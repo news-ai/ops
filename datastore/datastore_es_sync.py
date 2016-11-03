@@ -24,7 +24,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 # Elasticsearch setup
 es = Elasticsearch(
-    ['https://search.newsai.org'],
+    ['https://search1.newsai.org'],
     http_auth=(ELASTICSEARCH_USER, ELASTICSEARCH_PASSWORD),
     port=443,
     use_ssl=True,
@@ -174,9 +174,67 @@ def reset_elastic(kind):
     es.indices.delete(index=kind, ignore=[400, 404])
     es.indices.create(index=kind, ignore=[400, 404])
 
+
+def sync_es_lists(index_name, kind, result_type):
+    to_append = []
+    query = client.query(kind=kind)
+    limit = 0
+    total = 0
+    for result in query.fetch():
+        result_id = result.key.id
+        result['Id'] = int(result_id)
+
+        if 'FieldsMap.Value' in result:
+            del result['FieldsMap.Value']
+        if 'Contacts' in result:
+            del result['Contacts']
+        if 'FieldsMap.Name' in result:
+            del result['FieldsMap.Name']
+        if 'FieldsMap.CustomField' in result:
+            del result['FieldsMap.CustomField']
+        if 'FieldsMap.Hidden' in result:
+            del result['FieldsMap.Hidden']
+
+        if 'fieldsmap.Value' in result:
+            del result['fieldsmap.Value']
+        if 'fieldsmap.Name' in result:
+            del result['fieldsmap.Name']
+        if 'fieldsmap.CustomField' in result:
+            del result['fieldsmap.CustomField']
+        if 'fieldsmap.Hidden' in result:
+            del result['fieldsmap.Hidden']
+
+        doc = {
+            '_type': result_type,
+            '_index': index_name,
+            '_id': result_id,
+            'data': result
+        }
+
+        print doc
+        to_append.append(doc)
+        print limit
+        if limit == 100:
+            res = helpers.bulk(es, to_append)
+            print res
+            to_append = []
+            limit = 0
+        limit = limit + 1
+        total = total + 1
+        print total
+    # If there are any that weren't processed at the end
+    if len(to_append) > 0:
+        res = helpers.bulk(es, to_append)
+        print res
+
 # Publications
 # reset_elastic('publications')
 # sync_es('publications', 'Publication', 'publication')
+
+# sync_es('lists', 'MediaList', 'list')
+
+reset_elastic('lists')
+sync_es_lists('lists', 'MediaList', 'list')
 
 # Agencies
 # reset_elastic('agencies')
