@@ -204,6 +204,9 @@ def sync_es_lists(index_name, kind, result_type):
         if 'fieldsmap.Hidden' in result:
             del result['fieldsmap.Hidden']
 
+        if 'Password' in result:
+            del result['Password']
+
         doc = {
             '_type': result_type,
             '_index': index_name,
@@ -235,6 +238,9 @@ def sync_es_lists(index_name, kind, result_type):
 
 # reset_elastic('lists')
 # sync_es_lists('lists', 'MediaList', 'list')
+
+# reset_elastic('users')
+# sync_es_lists('users', 'User', 'user')
 
 # Agencies
 # reset_elastic('agencies')
