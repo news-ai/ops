@@ -230,11 +230,24 @@ def sync_es_lists(index_name, kind, result_type):
         res = helpers.bulk(es, to_append)
         print res
 
+def fix_ids(kind):
+    to_append = []
+    query = client.query(kind=kind)
+    limit = 0
+    total = 0
+    for result in query.fetch():
+        print result.key.id
+        es.delete(index="feeds",doc_type="feed",id=result.key.id)
+
 # Publications
 # reset_elastic('publications')
 # sync_es('publications', 'Publication', 'publication')
 
 # sync_es('lists', 'MediaList', 'list')
+
+# fix_ids('Feed')
+
+# sync_es('rssfeeds', 'Feed', 'feed')
 
 # reset_elastic('lists')
 # sync_es_lists('lists', 'MediaList', 'list')
