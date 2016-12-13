@@ -1,0 +1,151 @@
+{
+  "status": 200,
+  "requestId": "2777b651-3e2e-4acd-9355-5e41bc0e9b26",
+  "likelihood": 0.89,
+  "photos": [
+    {
+      "type": "facebook",
+      "typeId": "facebook",
+      "typeName": "Facebook",
+      "url": "https://d2ojpxxtu63wzl.cloudfront.net/static/e0525570cd3518b6d7b38bb2ffbd4526_7706ccda7957e0f25a6efa6b0df635c0935edd8763acad8422bda3a217dda2cf",
+      "isPrimary": true
+    },
+    {
+      "type": "twitter",
+      "typeId": "twitter",
+      "typeName": "Twitter",
+      "url": "https://d2ojpxxtu63wzl.cloudfront.net/static/ad2ff40b4a46afee234fc31381f26869_ee5a860da7d6180a887cd8be59ef831ffa2c18fffe964d65ed8a3f14a1009f25"
+    },
+    {
+      "type": "pinterest",
+      "typeId": "pinterest",
+      "typeName": "Pinterest",
+      "url": "https://d2ojpxxtu63wzl.cloudfront.net/static/c255d716d652c9367faa7a24ac1cc520_6e1bfdf52603f3c40ff1dda95057f93ba63283bca6fd7746626120ae63fa184a"
+    }
+  ],
+  "contactInfo": {
+    "websites": [
+      {
+        "url": "http://www.georgiaalexiabenjou.com"
+      }
+    ],
+    "familyName": "Benjou",
+    "fullName": "Georgia Benjou",
+    "givenName": "Georgia"
+  },
+  "organizations": [
+    {
+      "name": "Georgia Alexia Benjou",
+      "startDate": "2002",
+      "title": "Fashion Editor, Stylist & Consultant",
+      "current": true
+    }
+  ],
+  "demographics": {
+    "locationDeduced": {
+      "normalizedLocation": "Denver, Colorado, United States",
+      "deducedLocation": "Denver, Colorado, United States",
+      "city": {
+        "name": "Denver"
+      },
+      "state": {
+        "name": "Colorado",
+        "code": "CO"
+      },
+      "country": {
+        "name": "United States",
+        "code": "US"
+      },
+      "continent": {
+        "deduced": true,
+        "name": "North America"
+      },
+      "county": {
+        "deduced": true,
+        "name": "Denver"
+      },
+      "likelihood": 1
+    },
+    "locationGeneral": "Denver, Colorado, United States",
+    "gender": "Female"
+  },
+  "socialProfiles": [
+    {
+      "type": "facebook",
+      "typeId": "facebook",
+      "typeName": "Facebook",
+      "url": "https://www.facebook.com/georgia.benjou"
+    },
+    {
+      "type": "klout",
+      "typeId": "klout",
+      "typeName": "Klout",
+      "url": "http://klout.com/gabenjou",
+      "username": "gabenjou",
+      "id": "43628626155148747"
+    },
+    {
+      "bio": "• 20+ years fashion industry experience, including eight years in New York City and two years in Los Angeles\n\n • Image creator and tastemaker, whose goal is to edit all elements into the strongest visual presentation to establish and/or support brand identity\n\n • Understands fashion from multiple angles – product development, merchandising, editorial, public relations, advertising – as well as developing and maintaining brand identity\n\n • Skillful at fostering long-term relationships with clients and business contacts\n\n • Able to execute projects within budget and on time\n\n • Can travel for work and can work local in Los Angeles and San Francisco.",
+      "followers": 500,
+      "following": 500,
+      "type": "linkedin",
+      "typeId": "linkedin",
+      "typeName": "LinkedIn",
+      "url": "https://www.linkedin.com/in/georgiaalexiabenjou",
+      "username": "georgiaalexiabenjou",
+      "id": "15422593"
+    },
+    {
+      "bio": "Fashion stylist, editor & consultant",
+      "followers": 525,
+      "following": 334,
+      "type": "pinterest",
+      "typeId": "pinterest",
+      "typeName": "Pinterest",
+      "url": "http://www.pinterest.com/gabenjou/",
+      "username": "gabenjou"
+    },
+    {
+      "bio": "Fashion stylist, editor & consultant",
+      "followers": 1090,
+      "following": 1082,
+      "type": "twitter",
+      "typeId": "twitter",
+      "typeName": "Twitter",
+      "url": "https://twitter.com/gabenjou",
+      "username": "gabenjou",
+      "id": "155038753"
+    }
+  ],
+  "digitalFootprint": {
+    "scores": [
+      {
+        "provider": "klout",
+        "type": "general",
+        "value": 34
+      }
+    ],
+    "topics": [
+      {
+        "provider": "klout",
+        "value": "Boulder"
+      },
+      {
+        "provider": "klout",
+        "value": "Colorado"
+      },
+      {
+        "provider": "klout",
+        "value": "Denver"
+      },
+      {
+        "provider": "klout",
+        "value": "Jewelry"
+      },
+      {
+        "provider": "klout",
+        "value": "Shoes"
+      }
+    ]
+  }
+}
