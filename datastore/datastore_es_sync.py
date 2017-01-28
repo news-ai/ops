@@ -261,9 +261,9 @@ def fix_ids(kind):
 # reset_elastic('agencies')
 # sync_es('agencies', 'Agency', 'agency')
 
-# Agencies
-# reset_elastic('contacts')
-# sync_list_contacts()
+# Contacts
+reset_elastic('contacts')
+sync_list_contacts()
 # sync_lists_contacts_hourly()
 
 # Headlines

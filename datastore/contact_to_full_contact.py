@@ -69,7 +69,7 @@ def run_email(email):
             print 'Contact invalid:', email
 
 def fetch_and_run_email():
-    contacts = es.search(index="contacts", body={}, size=8000, from_=2000)
+    contacts = es.search(index="contacts", body={}, size=44000, from_=3000)
     for contact in contacts['hits']['hits']:
         email = contact['_source']['data']['Email']
         email = email.lower()
@@ -87,6 +87,9 @@ def fetch_and_run_email():
         else:
             print 'Contact does not have email', contact
 
+        # Print an empty line
+        print
+
 def remove_202_status():
     contacts = es.search(index="database", doc_type="contacts", body={
             "query": {"match": {"data.status": 202}}}, size=1000)
@@ -95,6 +98,6 @@ def remove_202_status():
         print contact['_id']
         print es.delete(index="database", doc_type="contacts", id=contact['_id'])
 
-# run_email('me@abhiagarwal.com')
+# run_email('mike@nytimes.com')
 fetch_and_run_email()
 # remove_202_status()
