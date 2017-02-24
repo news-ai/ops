@@ -244,6 +244,11 @@ def fix_ids(kind):
 # reset_elastic('publications')
 # sync_es('publications', 'Publication', 'publication')
 
+# NEVVER RUN THIS: reset_elastic('emails')
+# WILL REMOVE LOGS TOO
+# sync_es('emails', 'Email', 'email')
+
+# reset_elastic('lists')
 # sync_es('lists', 'MediaList', 'list')
 
 # fix_ids('Feed')
@@ -262,8 +267,8 @@ def fix_ids(kind):
 # sync_es('agencies', 'Agency', 'agency')
 
 # Contacts
-reset_elastic('contacts')
-sync_list_contacts()
+# reset_elastic('contacts')
+# sync_list_contacts()
 # sync_lists_contacts_hourly()
 
 # Headlines
