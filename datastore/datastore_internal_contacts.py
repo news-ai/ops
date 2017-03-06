@@ -30,10 +30,27 @@ es = Elasticsearch(
 
 
 def process_contacts(contacts):
+    to_append = []
     for contact in contacts['hits']['hits']:
         email = contact['_source']['data']['Email']
         if email:
-            print email
+            result = {
+                'email': email
+            }
+            doc = {
+                '_type': 'internal',
+                '_index': 'database',
+                '_id': email,
+                'data': result
+            }
+            to_append.append(doc)
 
-contacts = es.search(index="contacts", body={}, size=100, from_=0)
-process_contacts(contacts)
+    print to_append
+    res = helpers.bulk(es, to_append)
+
+for i in range(0, 87):
+    from_value = 0
+    if i > 0:
+        from_value = 1000*i
+    contacts = es.search(index="contacts", body={}, size=1000 + from_value, from_=from_value)
+    process_contacts(contacts)
