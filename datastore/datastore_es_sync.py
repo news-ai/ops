@@ -231,6 +231,26 @@ def sync_es_lists(index_name, kind, result_type):
         print res
 
 
+def sync_es_publications(index_name, kind, result_type):
+    to_append = []
+    query = client.query(kind=kind)
+    limit = 0
+    total = 0
+    for result in query.fetch():
+        result_id = result.key.id
+        result['Id'] = int(result_id)
+
+        doc = {
+            '_type': result_type,
+            '_index': index_name,
+            '_id': result_id,
+            'data': result
+        }
+
+        if 'Url' in result and result['Url'] != '':
+            print result['Url']
+
+
 def fix_ids(kind):
     to_append = []
     query = client.query(kind=kind)
@@ -243,6 +263,8 @@ def fix_ids(kind):
 # Publications
 # reset_elastic('publications')
 # sync_es('publications', 'Publication', 'publication')
+
+sync_es_publications('publications', 'Publication', 'publication')
 
 # NEVVER RUN THIS: reset_elastic('emails')
 # WILL REMOVE LOGS TOO
