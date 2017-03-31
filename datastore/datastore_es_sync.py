@@ -264,7 +264,7 @@ def fix_ids(kind):
 # reset_elastic('publications')
 # sync_es('publications', 'Publication', 'publication')
 
-sync_es_publications('publications', 'Publication', 'publication')
+# sync_es_publications('publications', 'Publication', 'publication')
 
 # NEVVER RUN THIS: reset_elastic('emails')
 # WILL REMOVE LOGS TOO
