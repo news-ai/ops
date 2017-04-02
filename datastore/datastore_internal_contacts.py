@@ -35,22 +35,40 @@ def process_contacts(contacts):
         email = contact['_source']['data']['Email']
         if email:
             result = {
-                'email': email
+                'email': email,
+                'valid': True
             }
             doc = {
-                '_type': 'internal',
+                '_type': 'internal1',
                 '_index': 'database',
                 '_id': email,
                 'data': result
             }
             to_append.append(doc)
 
-    print to_append
     res = helpers.bulk(es, to_append)
+    print res
 
-for i in range(0, 87):
-    from_value = 0
-    if i > 0:
-        from_value = 1000*i
-    contacts = es.search(index="contacts", body={}, size=1000 + from_value, from_=from_value)
-    process_contacts(contacts)
+
+def get_contacts():
+    page = es.search(
+        index='contacts',
+        doc_type='contact',
+        scroll='2m',
+        search_type='scan',
+        size=200,
+        body={}
+    )
+
+    sid = page['_scroll_id']
+    scroll_size = page['hits']['total']
+
+    while (scroll_size > 0):
+        page = es.scroll(scroll_id=sid, scroll='2m')
+        sid = page['_scroll_id']
+        scroll_size = len(page['hits']['hits'])
+        print "scroll size: " + str(scroll_size)
+
+        process_contacts(page)
+
+get_contacts()
