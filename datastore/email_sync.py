@@ -65,29 +65,54 @@ def get_email_logs():
 
     return user_to_emails
 
+
 def user_emails_to_timeseries(user_emails):
     date_to_email = {}
     for email in user_emails:
-        datetime_object = email['Created'][0:10]
+        if email['IsSent']:
+            datetime_object = email['Created'][0:10]
 
-        if datetime_object not in date_to_email:
-            date_to_email[datetime_object] = {}
+            if datetime_object not in date_to_email:
+                date_to_email[datetime_object] = {}
 
-        # Append Opens
-        if 'Opens' not in date_to_email[datetime_object]:
-            date_to_email[datetime_object]['Opens'] = 0
-        date_to_email[datetime_object]['Opens'] += email['Opened']
+            # Append Opens
+            if 'Opens' not in date_to_email[datetime_object]:
+                date_to_email[datetime_object]['Opens'] = 0
+            date_to_email[datetime_object]['Opens'] += email['Opened']
 
-        # Append Clicks
-        if 'Clicks' not in date_to_email[datetime_object]:
-            date_to_email[datetime_object]['Clicks'] = 0
-        date_to_email[datetime_object]['Clicks'] += email['Clicked']
+            # Append Clicks
+            if 'Clicks' not in date_to_email[datetime_object]:
+                date_to_email[datetime_object]['Clicks'] = 0
+            date_to_email[datetime_object]['Clicks'] += email['Clicked']
 
-        # Append Opens
-        if 'Amount' not in date_to_email[datetime_object]:
-            date_to_email[datetime_object]['Amount'] = 0
-        date_to_email[datetime_object]['Amount'] += 1
+            # Append Opens
+            if 'Amount' not in date_to_email[datetime_object]:
+                date_to_email[datetime_object]['Amount'] = 0
+            date_to_email[datetime_object]['Amount'] += 1
 
-    print date_to_email
+    return date_to_email
+
+
+def timeseries_to_es_data(user_id, timeseries):
+    to_append = []
+
+    for data_point in timeseries.keys():
+        timeseries[data_point]['UserId'] = user_id
+        timeseries[data_point]['Date'] = data_point
+
+        doc = {
+            '_type': 'useremail2',
+            '_index': 'timeseries',
+            '_id': str(user_id) + '-' + data_point,
+            'data': timeseries[data_point]
+        }
+
+        to_append.append(doc)
+
+    res = helpers.bulk(es, to_append)
+    print res
 
 email_dictionary = get_email_logs()
+for single_key in email_dictionary.keys():
+    timeseries = user_emails_to_timeseries(email_dictionary[single_key])
+    es_data = timeseries_to_es_data(single_key, timeseries)
