@@ -65,6 +65,7 @@ def get_email_logs():
 
     return user_to_emails
 
+
 def user_emails_to_campaigns(user_emails):
     date_to_email = {}
     for email in user_emails:
@@ -79,6 +80,29 @@ def user_emails_to_campaigns(user_emails):
 
     return date_to_email
 
+
+def campaigns_to_es_data(user_id, campaigns):
+    pattern = re.compile('([^\s\w]|_)+')
+    to_append = []
+
+    for data_point in campaigns.keys():
+        for campaign in campaigns[data_point].keys():
+            name = pattern.sub('', campaign)
+            name = name.strip()
+            name = name.replace(' ', '-')
+            name = name.lower()
+            doc = {
+                '_index': 'emails',
+                '_type': 'campaign',
+                '_id': str(user_id) + '-' + data_point + '-' + name,
+                'data': {}
+            }
+
+            to_append.append(doc)
+
+    print to_append
+
 email_dictionary = get_email_logs()
 for single_key in email_dictionary.keys():
     campaigns = user_emails_to_campaigns(email_dictionary[single_key])
+    es_data = campaigns_to_es_data(single_key, campaigns)
