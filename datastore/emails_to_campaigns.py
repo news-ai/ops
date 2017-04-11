@@ -93,14 +93,19 @@ def campaigns_to_es_data(user_id, campaigns):
             name = name.lower()
             doc = {
                 '_index': 'emails',
-                '_type': 'campaign',
+                '_type': 'campaign1',
                 '_id': str(user_id) + '-' + data_point + '-' + name,
-                'data': {}
+                'data': {
+                    'Subject': campaign,
+                    'Date': data_point,
+                    'UserId': str(user_id),
+                }
             }
 
             to_append.append(doc)
 
-    print to_append
+    res = helpers.bulk(es, to_append)
+    print res
 
 email_dictionary = get_email_logs()
 for single_key in email_dictionary.keys():
