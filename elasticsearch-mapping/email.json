@@ -1,0 +1,145 @@
+{
+    "emails": {
+        "mappings": {
+            "email1": {
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "Archived": {
+                                "type": "boolean"
+                            },
+                            "Attachments": {
+                                "type": "long"
+                            },
+                            "BCC": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "BaseSubject": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "BatchId": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "Body": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "Bounced": {
+                                "type": "boolean"
+                            },
+                            "BouncedReason": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "CC": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "Cancel": {
+                                "type": "boolean"
+                            },
+                            "Clicked": {
+                                "type": "long"
+                            },
+                            "ContactId": {
+                                "type": "long"
+                            },
+                            "Created": {
+                                "type": "date",
+                                "format": "strict_date_optional_time||epoch_millis"
+                            },
+                            "CreatedBy": {
+                                "type": "long"
+                            },
+                            "Delievered": {
+                                "type": "boolean"
+                            },
+                            "FirstName": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "FromEmail": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "GmailId": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "GmailThreadId": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "Id": {
+                                "type": "long"
+                            },
+                            "IsSent": {
+                                "type": "boolean"
+                            },
+                            "LastName": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "ListId": {
+                                "type": "long"
+                            },
+                            "Method": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "Opened": {
+                                "type": "long"
+                            },
+                            "SendAt": {
+                                "type": "date",
+                                "format": "strict_date_optional_time||epoch_millis"
+                            },
+                            "SendGridClicked": {
+                                "type": "long"
+                            },
+                            "SendGridId": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "SendGridOpened": {
+                                "type": "long"
+                            },
+                            "Sender": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "Spam": {
+                                "type": "boolean"
+                            },
+                            "SparkPostId": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "Subject": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "TeamId": {
+                                "type": "long"
+                            },
+                            "TemplateId": {
+                                "type": "long"
+                            },
+                            "To": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "Updated": {
+                                "type": "date",
+                                "format": "strict_date_optional_time||epoch_millis"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
