@@ -24,7 +24,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 # Elasticsearch setup
 es = Elasticsearch(
-    ['https://search1.newsai.org'],
+    ['https://search.newsai.org'],
     http_auth=(ELASTICSEARCH_USER, ELASTICSEARCH_PASSWORD),
     port=443,
     use_ssl=True,
@@ -269,7 +269,7 @@ def fix_ids(kind):
 # NEVVER RUN THIS: reset_elastic('emails')
 # WILL REMOVE LOGS TOO
 # sync_es('emails', 'Email', 'email')
-sync_es('emails1', 'Email', 'email')
+# sync_es('emails1', 'Email', 'email')
 
 # reset_elastic('lists')
 # sync_es('lists', 'MediaList', 'list')
