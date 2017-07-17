@@ -270,6 +270,7 @@ def fix_ids(kind):
 # WILL REMOVE LOGS TOO
 # sync_es('emails', 'Email', 'email')
 # sync_es('emails1', 'Email', 'email')
+sync_es('emails2', 'Email', 'email')
 
 # reset_elastic('lists')
 # sync_es('lists', 'MediaList', 'list')
