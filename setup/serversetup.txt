@@ -1,0 +1,161 @@
+first api
+ssh api@172.99.68.57
+
+adduser api
+gpasswd -a api sudo
+su - api
+mkdir .ssh
+chmod 700 .ssh
+sudo apt-get install vim
+vim .ssh/authorized_keys (put in ssh key)
+chmod 600 .ssh/authorized_keys
+exit
+
+vim /etc/ssh/sshd_config
+change PermitRootLogin yes to PermitRootLogin no
+service ssh restart
+
+sudo ufw allow ssh
+sudo ufw allow 80/tcp (to allow port 80)
+sudo ufw allow 443/tcp (to allow ssl)
+sudo ufw show added (to see all)
+
+configure timezones (not on api server pls)
+sudo dpkg-reconfigure tzdata
+
+NTP Synchronization
+sudo apt-get update
+sudo apt-get install ntp
+
+Swap file
+sudo fallocate -l 4G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo sh -c 'echo "/swapfile none swap sw 0 0" >> /etc/fstab' (at boot)
+
+Fail2Ban
+sudo apt-get update
+sudo apt-get install fail2ban
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+sudo vim /etc/fail2ban/jail.local
+change enabled = false to enabled = true
+
+sudo apt-get update
+sudo apt-get install nginx sendmail iptables-persistent
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -j DROP
+sudo iptables -S (to view)
+
+sudo vim /etc/fail2ban/jail.local
+(follow changes here https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-ubuntu-14-04)
+
+vim /etc/ssh/sshd_config
+change #PasswordAuthentication yes to PasswordAuthentication no
+sudo restart ssh
+
+sudo apt-get update
+sudo apt-get install python-pip python-dev libpq-dev postgresql postgresql-contrib nginx
+
+sudo su - postgres
+psql
+CREATE DATABASE context;
+CREATE USER context WITH PASSWORD 'LnmEksnM36uPHG';
+GRANT ALL PRIVILEGES ON DATABASE context TO context;
+ALTER DATABASE context OWNER TO context;
+\q
+exit
+
+sudo pip install virtualenv
+mkdir ~/context
+cd ~/context
+virtualenv context
+source context/bin/activate
+
+sudo apt install libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev
+
+pip install django gunicorn psycopg2
+export CONTEXT_ENVIRONMENT='prod'
+pip install -r requirements.txt
+pip install pillow==2.9.0
+
+./manage.py makemigrations
+./manage.py migrate
+./manage.py createsuperuser
+./manage.py runserver
+nohup gunicorn --bind 0.0.0.0:8000 -w 5 context.wsgi:application &
+
+sudo vim /etc/nginx/sites-available/default
+
+Everytime after that
+
+ps auwx | grep gunicorn
+kill <all tasks>
+export CONTEXT_ENVIRONMENT='prod'
+nohup gunicorn --bind 0.0.0.0:8000 -w 3 context.wsgi:application &
+
+sudo apt-get install libxml2-dev
+sudo apt-get install libxslt1-dev
+sudo apt-get install python-dev
+
+Setup supervisor
+http://agiliq.com/blog/2014/05/supervisor-with-django-and-gunicorn/
+https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-supervisor-on-ubuntu-and-debian-vps
+then you can run using supervisord
+use the client like: supervisorctl, > restart gunicorn, stop gunicorn
+cat /tmp/supervisord.pid
+kill -9 <id>
+
+Installing redis (http://michal.karzynski.pl/blog/2013/07/14/using-redis-as-django-session-store-and-cache-backend/)
+sudo apt-get install redis-server
+Edit /etc/redis/redis.conf and uncomment
+
+bind 127.0.0.1
+
+to avoid the small overhead of TCP, and put
+
+unixsocket /var/run/redis/redis.sock
+unixsocketperm 700
+
+If the permissions are an issue then put
+unixsocketperm 777 (and restart)
+OR DO (better)
+sudo usermod -a -G redis api
+and change to unixsocketperm 777
+
+and restart using sudo service redis-server restart.
+or /etc/init.d/redis-server stop
+
+If issues https://gitlab.com/gitlab-org/gitlab-ce/merge_requests/224/diffs
+
+# For restarting things
+supervisorctl restart gunicorn
+
+# Django
+(http://michal.karzynski.pl/blog/2014/05/18/setting-up-an-asynchronous-task-queue-for-django-using-celery-redis/)
+pip install celery[redis]
+
+ps aux | grep supervisord
+kill <id>
+
+OR
+supervisorctl reread
+
+supervisord
+supervisorctl
+
+# Celery status
+
+celery --app=context.celery:app status
+celery --app=context.celery:app control enable_events
+celery --app=context.celery:app events (monitor events)
+
+# For later
+sudo vim /etc/init/gunicorn.conf
+sudo service gunicorn start
+
+apt-get install libxml2-dev libxslt-dev
+

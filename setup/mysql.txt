@@ -1,0 +1,20 @@
+brew remove mysql
+brew cleanup --force
+launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+rm ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+sudo rm -rf /usr/local/var/mysql
+
+brew install mysql
+mysqld --initialize --explicit_defaults_for_timestamp
+mysql.server start # no sudo!
+
+mysql -u root -p context > newsai-context-b.sql
+
+CREATE USER 'root'@'localhost' IDENTIFIED BY 'QVpjDZEiCE#c2CN9tTGU';
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'QVpjDZEiCE#c2CN9tTGU';
+
+CREATE DATABASE context;
+GRANT ALL PRIVILEGES ON context TO 'root'@'localhost';
+
+GRANT ALL PRIVILEGES ON * . * TO 'root'@'localhost';
