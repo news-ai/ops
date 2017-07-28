@@ -28,4 +28,4 @@ def sync_list_contacts(key):
     m = requests.get(resync_path, verify=False, auth=('jebqsdFMddjuwZpgFrRo', ''))
     print m.status_code
 
-sync_list_contacts(6542458653507584)
+sync_list_contacts(5333273274220544)
