@@ -20,31 +20,23 @@ es = Elasticsearch(
 )
 
 contacts = es.search(index='md', doc_type='contacts', size=1000)
-
-to_append = []
 for contact in contacts['hits']['hits']:
     for index, beat in enumerate(contact['_source']['data']['writingInformation']['beats']):
         if beat == 'Tech':
-            contact['_source']['data']['writingInformation']['beats'][index] = u'Technology'
+            contact['_source']['data']['writingInformation'][
+                'beats'][index] = u'Technology'
 
     # Edge case in one of the contacts
     if len(contact['_source']['data']['writingInformation']['beats']) == 2:
         print contact['_id']
         print contact['_source']['data']['writingInformation']['beats']
-        contact['_source']['data']['writingInformation']['beats'] = [contact['_source']['data']['writingInformation']['beats'][0]]
+        contact['_source']['data']['writingInformation']['beats'] = [
+            contact['_source']['data']['writingInformation']['beats'][0]]
         print contact['_source']['data']['writingInformation']['beats']
 
-    doc = {
-        '_type': 'md',
-        '_index': 'contacts',
-        '_id': contact['_id'],
-        'data': contact['_source']['data']
-    }
+    # print contact['_source']['data']['writingInformation']['beats']
+    # print {
+        # 'doc': {'data': {'writingInformation': {'beats': contact['_source']['data']['writingInformation']['beats']}}}}
 
-    to_append.append(doc)
-
-print len(to_append)
-# for contact in to_append:
-    # print contact['_id']
-# res = helpers.bulk(es, to_append)
-# print res
+    es.update(index='md', doc_type='contacts', id=contact['_id'], body={
+        'doc': {'data': {'writingInformation': {'beats': contact['_source']['data']['writingInformation']['beats']}}}})
