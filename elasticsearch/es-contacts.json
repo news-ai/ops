@@ -1,0 +1,264 @@
+{
+    "md": {
+        "mappings": {
+            "contacts": {
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "contactInfo": {
+                                "properties": {
+                                    "familyName": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "fullName": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "givenName": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "websites": {
+                                        "properties": {
+                                            "url": {
+                                                "type": "string",
+                                                "index": "not_analyzed"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "created": {
+                                "type": "date",
+                                "format": "strict_date_optional_time||epoch_millis"
+                            },
+                            "demographics": {
+                                "properties": {
+                                    "gender": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "locationDeduced": {
+                                        "properties": {
+                                            "city": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "index": "not_analyzed"
+                                                    }
+                                                }
+                                            },
+                                            "continent": {
+                                                "properties": {
+                                                    "deduced": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "index": "not_analyzed"
+                                                    }
+                                                }
+                                            },
+                                            "country": {
+                                                "properties": {
+                                                    "code": {
+                                                        "type": "string",
+                                                        "index": "not_analyzed"
+                                                    },
+                                                    "deduced": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "index": "not_analyzed"
+                                                    }
+                                                }
+                                            },
+                                            "deducedLocation": {
+                                                "type": "string",
+                                                "index": "not_analyzed"
+                                            },
+                                            "likelihood": {
+                                                "type": "long"
+                                            },
+                                            "normalizedLocation": {
+                                                "type": "string",
+                                                "index": "not_analyzed"
+                                            },
+                                            "state": {
+                                                "properties": {
+                                                    "code": {
+                                                        "type": "string",
+                                                        "index": "not_analyzed"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "index": "not_analyzed"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "locationGeneral": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    }
+                                }
+                            },
+                            "digitalFootprint": {
+                                "properties": {
+                                    "scores": {
+                                        "properties": {
+                                            "provider": {
+                                                "type": "string",
+                                                "index": "not_analyzed"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "index": "not_analyzed"
+                                            },
+                                            "value": {
+                                                "type": "long"
+                                            }
+                                        }
+                                    },
+                                    "topics": {
+                                        "properties": {
+                                            "provider": {
+                                                "type": "string",
+                                                "index": "not_analyzed"
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "index": "not_analyzed"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "email": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "isOutdated": {
+                                "type": "boolean"
+                            },
+                            "likelihood": {
+                                "type": "double"
+                            },
+                            "organizations": {
+                                "properties": {
+                                    "endDate": {
+                                        "type": "date",
+                                        "format": "strict_date_optional_time||epoch_millis"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "startDate": {
+                                        "type": "date",
+                                        "format": "strict_date_optional_time||epoch_millis"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    }
+                                }
+                            },
+                            "photos": {
+                                "properties": {
+                                    "isPrimary": {
+                                        "type": "boolean"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "typeId": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "typeName": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    }
+                                }
+                            },
+                            "requestId": {
+                                "type": "string",
+                                "index": "not_analyzed"
+                            },
+                            "socialProfiles": {
+                                "properties": {
+                                    "bio": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "id": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "typeId": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "typeName": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    }
+                                }
+                            },
+                            "status": {
+                                "type": "long"
+                            },
+                            "toUpdate": {
+                                "type": "boolean"
+                            },
+                            "updated": {
+                                "type": "date",
+                                "format": "strict_date_optional_time||epoch_millis"
+                            },
+                            "writingInformation": {
+                                "properties": {
+                                    "beats": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "isFreelancer": {
+                                        "type": "boolean"
+                                    },
+                                    "occasionalBeats": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    },
+                                    "rss": {
+                                        "type": "string",
+                                        "index": "not_analyzed"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
