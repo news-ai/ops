@@ -64,6 +64,37 @@ def sync_es(index_name, kind, result_type):
         res = helpers.bulk(es, to_append)
         print res
 
+def sync_es_by_user(index_name, kind, result_type, user_id):
+    to_append = []
+    query = client.query(kind=kind)
+    query.add_filter('CreatedBy', '=', user_id)
+    limit = 0
+    total = 0
+    for result in query.fetch():
+        print result
+        result_id = result.key.id
+        result['Id'] = int(result_id)
+
+        doc = {
+            '_type': result_type,
+            '_index': index_name,
+            '_id': result_id,
+            'data': result
+        }
+        to_append.append(doc)
+        print limit
+        if limit == 100:
+            res = helpers.bulk(es, to_append)
+            print res
+            to_append = []
+            limit = 0
+        limit = limit + 1
+        total = total + 1
+        print total
+    # If there are any that weren't processed at the end
+    if len(to_append) > 0:
+        res = helpers.bulk(es, to_append)
+        print res
 
 def contact_struct_to_es(contact, media_list):
     if 'CustomFields.Name' in contact:
@@ -271,6 +302,7 @@ def fix_ids(kind):
 # sync_es('emails', 'Email', 'email')
 # sync_es('emails1', 'Email', 'email')
 # sync_es('emails2', 'Email', 'email')
+# sync_es_by_user('emails2', 'Email', 'email', 6190547823755264)
 
 # reset_elastic('lists')
 # sync_es('lists', 'MediaList', 'list')
