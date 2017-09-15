@@ -32,3 +32,9 @@ curl -PUT https://newsai:@search1.newsai.org/emails/email -d '{
     }
 }'
 ```
+
+### Renewing ES for Search
+
+- Turn off nginx (`sudo service nginx stop`)
+- Renew certificate (`./certbot-auto renew`)
+- Turn on nginx (`sudo service nginx start`)
