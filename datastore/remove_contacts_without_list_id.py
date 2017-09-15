@@ -17,4 +17,4 @@ for result in query.fetch():
     print count
     if 'ListId' not in result:
         print result
-        client.delete(result.key)
+        # client.delete(result.key)
