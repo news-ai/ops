@@ -13,7 +13,7 @@ ELASTICSEARCH_PASSWORD = os.environ['NEWSAI_ELASTICSEARCH_PASSWORD']
 
 # Elasticsearch setup
 es = Elasticsearch(
-    ['https://search1.newsai.org'],
+    ['https://search.newsai.org'],
     http_auth=(ELASTICSEARCH_USER, ELASTICSEARCH_PASSWORD),
     port=443,
     use_ssl=True,
@@ -52,7 +52,7 @@ def get_emails_sent():
         }
     }
 
-    res = es.search(index='emails1', doc_type='email', body=query)
+    res = es.search(index='emails2', doc_type='email', body=query)
     return res
 
 
@@ -92,7 +92,7 @@ def get_emails_opened():
         }
     }
 
-    res = es.search(index='emails1', doc_type='email', body=query)
+    res = es.search(index='emails2', doc_type='email', body=query)
     return res
 
 
@@ -132,7 +132,7 @@ def get_emails_clicked():
         }
     }
 
-    res = es.search(index='emails1', doc_type='email', body=query)
+    res = es.search(index='emails2', doc_type='email', body=query)
     return res
 
 
@@ -170,7 +170,7 @@ def get_emails_bounced():
         }
     }
 
-    res = es.search(index='emails1', doc_type='email', body=query)
+    res = es.search(index='emails2', doc_type='email', body=query)
     return res
 
 print get_emails_sent()['hits']['total']
