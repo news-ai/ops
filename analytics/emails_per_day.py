@@ -23,8 +23,8 @@ es = Elasticsearch(
 )
 
 
-def get_emails_sent_today():
-    date_from = moment.now().locale("US/Eastern").timezone("Europe/London").subtract(days=7).replace(
+def get_emails_sent_today(method, id_name):
+    date_from = moment.now().locale("US/Eastern").timezone("Europe/London").subtract(days=100).replace(
         hours=0, minutes=0, seconds=0).format('YYYY-MM-DDTHH:mm:ss')
     date_to = moment.now().locale(
         "US/Eastern").timezone("Europe/London").format('YYYY-MM-DDTHH:mm:ss')
@@ -48,7 +48,11 @@ def get_emails_sent_today():
                     'term': {
                         'data.Delievered': True
                     }
-                },  {
+                }, {
+                    'term': {
+                        'data.Method': method
+                    }
+                }, {
                     'range': {
                         'data.Created': {
                             'from': date_from,
@@ -69,10 +73,16 @@ def get_emails_sent_today():
         }
     }
 
+    if id_name != '':
+        query['query']['bool']['must_not'].append({'term': {id_name: ''}})
+
     res = es.search(index='emails2', doc_type='email', body=query)
     return res
 
-emails = get_emails_sent_today()
+# emails = get_emails_sent_today('sendgrid', 'data.SendGridId')
+# emails = get_emails_sent_today('gmail', 'data.GmailId')
+# emails = get_emails_sent_today('outlook', '')
+# emails = get_emails_sent_today('smtp', '')
 
 sent = len(emails['hits']['hits'])
 opened = 0
@@ -81,6 +91,9 @@ for email in emails['hits']['hits']:
     if email['_source']['data']['Opened'] > 0:
         opened += 1
 
-print sent
-print opened
-print ((float(opened)/float(sent))*100)
+if sent > 0:
+    print sent
+    print opened
+    print ('sengrid', (float(opened)/float(sent))*100)
+else:
+    print 'No emails'
